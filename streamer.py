@@ -45,12 +45,19 @@ class TweetListener(StreamListener):
     def on_data(self, raw_data):
         try:
             decoded = json.loads(raw_data)
+            if decoded["user"]["description"] is not None:
+                user_bio = decoded["user"]["description"].encode("ascii", "replace")
+            else:
+                user_bio = "None"
             tweet_dict = {
                 "id": decoded["id"],
                 "created_at": decoded["created_at"],
-                "text": decoded["text"].encode("ascii", "ignore"),
+                "text": decoded["text"].encode("ascii", "replace"),
                 "friends_count": decoded["user"]["friends_count"],
                 "user_favs": decoded["user"]["favourites_count"],
+                "screen_name": decoded["user"]["screen_name"],
+                "user_id": decoded["user"]["id"],
+                "user_bio": user_bio,
             }
             self.tweet_logger.info(tweet_dict)
             return True

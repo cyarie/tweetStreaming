@@ -28,7 +28,7 @@ class TweetListener(StreamListener):
             }
             print(tweet_dict)
             return True
-        except UnicodeEncodeError as e:
+        except Exception as e:
             pass
 
     def on_error(self, status_code):

@@ -27,7 +27,7 @@ class TweetListener(StreamListener):
                 "followers_count": decoded["user"]["followers_count"],
                 "friends_count": decoded["user"]["friends_count"],
             }
-            sys.stdout.write(tweet_dict)
+            sys.stdout.write(str(tweet_dict))
             return True
         except Exception as e:
             print(e)

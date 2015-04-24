@@ -18,14 +18,29 @@ consumer_secret = os.getenv("T_CONSUMER_SECRET")
 class TweetListener(StreamListener):
     def __init__(self):
         super(TweetListener, self).__init__()
-        self.logger = None
-        self.logger = logging.getLogger("candidate_mentions")
-        self.logger.setLevel(logging.INFO)
-        self.handler = TimedRotatingFileHandler("candidate_mentions.txt", when="d", interval=1, backupCount=30)
+        # Using logging to write tweets to a file
+        self.tweet_logger = logging.getLogger("candidate_mentions")
+        self.tweet_logger.setLevel(logging.INFO)
+        self.handler = TimedRotatingFileHandler(os.path.join(os.getcwd(), "tweet_logs/candidate_mentions.txt"),
+                                                when="d",
+                                                interval=1,
+                                                backupCount=30)
         self.handler.setLevel(logging.INFO)
         self.formatter = logging.Formatter("%(message)s")
         self.handler.setFormatter(self.formatter)
-        self.logger.addHandler(self.handler)
+        self.tweet_logger.addHandler(self.handler)
+
+        # Setting up a separate logger to handle errors
+        self.error_logger = logging.getLogger("streamer_errors")
+        self.error_logger.setLevel(logging.ERROR)
+        self.handler = TimedRotatingFileHandler("streamer_errors.txt",
+                                                when="d",
+                                                interval=1,
+                                                backupCount=30)
+        self.handler.setLevel(logging.ERROR)
+        self.formatter = logging.Formatter('%(asctime)s - %(filename)s - %(levelname)s - %(message)s')
+        self.handler.setFormatter(self.formatter)
+        self.error_logger.addHandler(self.handler)
 
     def on_data(self, raw_data):
         try:
@@ -37,10 +52,10 @@ class TweetListener(StreamListener):
                 "friends_count": decoded["user"]["friends_count"],
                 "user_favs": decoded["user"]["favourites_count"],
             }
-            self.logger.info(tweet_dict)
+            self.tweet_logger.info(tweet_dict)
             return True
         except Exception as e:
-            print(e)
+            self.error_logger.error(e)
 
     def on_error(self, status_code):
         print(status_code)

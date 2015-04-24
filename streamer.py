@@ -1,5 +1,6 @@
 import os
 import json
+import sys
 
 from tweepy.streaming import StreamListener
 from tweepy import OAuthHandler
@@ -26,7 +27,7 @@ class TweetListener(StreamListener):
                 "followers_count": decoded["user"]["followers_count"],
                 "friends_count": decoded["user"]["friends_count"],
             }
-            print(tweet_dict)
+            sys.stdout.write(tweet_dict)
             return True
         except Exception as e:
             print(e)

@@ -28,6 +28,8 @@ class TweetListener(StreamListener):
                 "friends_count": decoded["user"]["friends_count"],
             }
             sys.stdout.write(str(tweet_dict))
+            sys.stdout.write(str("\n"))
+            sys.stdout.flush()
             return True
         except Exception as e:
             print(e)

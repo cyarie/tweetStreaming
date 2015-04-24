@@ -29,7 +29,7 @@ class TweetListener(StreamListener):
             print(tweet_dict)
             return True
         except Exception as e:
-            pass
+            print(e)
 
     def on_error(self, status_code):
         print(status_code)
@@ -41,7 +41,10 @@ def main():
     auth.set_access_token(access_token, access_token_secret)
     stream = Stream(auth, listener)
 
-    stream.filter(track=['scott walker', 'marco rubio', 'rand paul', 'ted cruz', 'jeb bush'], languages=['en'])
+    try:
+        stream.filter(track=['scott walker', 'marco rubio', 'rand paul', 'ted cruz', 'jeb bush'], languages=['en'])
+    except Exception as e:
+        print(e)
 
 if __name__ == "__main__":
     main()

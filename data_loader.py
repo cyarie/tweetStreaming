@@ -22,7 +22,7 @@ def build_db():
     tweet_sql = """
     INSERT INTO tweet_data.tweets (tweet_id, user_id, screen_name, user_bio, text, user_favs, friends_count, created_at)
     VALUES (%(tweet_id)s, %(user_id)s, %(screen_name)s, %(user_bio)s, %(text)s, %(user_favs)s, %(friends_count)s,
-            %(create_at)s)
+            %(created_at)s)
     """
     with open(tweets_loc, "r", newline="") as tweets:
         db_conn = db_connect()

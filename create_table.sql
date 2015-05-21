@@ -8,7 +8,7 @@ CREATE TABLE tweet_data.tweets (
   user_id BIGINT,
   screen_name VARCHAR(255),
   user_bio VARCHAR(255),
-  text VARCHAR(255),
+  text TEXT,
   user_favs INTEGER,
   friends_count INTEGER,
   created_at TIMESTAMPTZ,

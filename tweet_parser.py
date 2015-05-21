@@ -4,11 +4,12 @@ import ast
 
 
 def json_to_csv():
-    with open("tweet_logs/master_tweets", "r", newline="") as tweet_file:
+    with open("/home/tweets-deploy/tweetStreaming/tweet_logs/master_tweets.txt", "r", newline="") as tweet_file:
         csv_path = os.path.join(os.getcwd(), "tweets_csvs")
         tweet_csv = os.path.join(csv_path, "tweets_master_csv.csv")
         with open(tweet_csv, "w") as tweets_csv:
-            headers = ["tweet_id", "user_id", "screen_name", "user_bio", "text", "user_favs", "friends_count", "created_at"]
+            headers = ["tweet_id", "user_id", "screen_name", "user_bio", "text",
+                       "user_favs", "friends_count", "created_at"]
             writer = csv.DictWriter(tweets_csv, fieldnames=headers, quoting=csv.QUOTE_MINIMAL)
 
             writer.writeheader()

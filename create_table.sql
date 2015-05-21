@@ -4,8 +4,8 @@ CREATE SCHEMA tweet_data;
 DROP TABLE IF EXISTS tweet_data.tweets;
 CREATE TABLE tweet_data.tweets (
   id SERIAL PRIMARY KEY,
-  tweet_id INTEGER,
-  user_id INTEGER,
+  tweet_id BIGINT,
+  user_id BIGINT,
   screen_name VARCHAR(140),
   user_bio VARCHAR(160),
   text VARCHAR(160),

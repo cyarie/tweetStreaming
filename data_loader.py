@@ -32,9 +32,12 @@ def build_db():
         for tweet in csv_reader:
             try:
                 cursor.execute(tweet_sql, tweet)
-                db_conn.commit()
             except psycopg2.IntegrityError:
                 print("LOGGING AN INTEGRITY ERROR AND PASSING.")
+                db_conn.rollback()
+            else:
+                db_conn.commit()
+
         db_conn.close()
     print("FINISHED WITH THE TWEETS!")
 
